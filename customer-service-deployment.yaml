@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      serverName: customer-service
+  template:
+    metadata:
+      labels:
+        serverName: customer-service
+    spec:
+      containers:
+        - name: customer-service-v1
+          image: meghanakouchika/customer-service
+          ports:
+            - containerPort: 8081
