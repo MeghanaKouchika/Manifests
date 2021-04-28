@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: account-service-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       serverName: account-service
@@ -12,8 +12,17 @@ spec:
       labels:
         serverName: account-service
     spec:
+      nodeSelector:
+        node: api
       containers:
         - name: account-service-v1
-          image: meghanakouchika/account-service
+          image: meghanakouchika/account-service:v22
           ports:
             - containerPort: 8081
+          env:
+            - name: name
+              #value: Current
+              valueFrom:
+                configMapKeyRef:
+                  name: properties-configmap
+                  key: accountName
